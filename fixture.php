@@ -8,7 +8,7 @@ require_once './functions/functionsDb.php';
 function criarDb() {
     $dsn     = 'mysql:host=localhost';
     $user    = 'root';
-    $pass    = 'root';
+    $pass    = '';
     $options = [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'];
     $dbname  = 'curso_code_education';
     $table   = 'pages';

@@ -9,3 +9,4 @@ Confesso que tive dificuldades nao nas aulas , mais sim no desenvolvimento do qu
 > Aprendir muito nessa aula e adquirir muito conhecimento .
 > tive um erro na parte da busca que me trouxe esse erro abaixo.
 > Notice: Undefined index: inputBusca in C:\Users\Giancarlo\EstudoCodeEdu\phpFundamentos\projeto3\functions\functionBusca.php on line 7
+
