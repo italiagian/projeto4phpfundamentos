@@ -19,6 +19,7 @@
             <li><a href="produtos">Produtos</a></li>
             <li><a href="servicos">Servicos</a></li>
             <li><a href="contato">Contato</a></li>
+              <li><a href="../admin">Login</a></li>
 
 <li>
 	                                                            <form class="form-inline" name="search" method="post" action="busca">

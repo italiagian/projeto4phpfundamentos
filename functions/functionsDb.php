@@ -1,7 +1,15 @@
 <?php
+/*
+ * @author Candido Souza
+ * Projeto: Estudos Potal Code Education - Módulo 04 Php Foundation
+ * Arquivo: functionDb.php
+ * Linguagem: php
+ * Data: 17/07/2014
+ */
+
 /*****************************
 funções PDO DB
-*****************************/
+ *****************************/
 
 // Função conectar DB
 function conectarDb()
@@ -15,7 +23,7 @@ function conectarDb()
         $pdo = new PDO($dsn, $user, $pass, $options);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
-        die("Error: Código: {$e->getCode()} | Mensagem: {$e->getMessage()} |  Arquivo: {$e->getFile()} | linha: {$e->getLine()}");
+        die("Error: Código: {$e->getCode()} <br> Mensagem: {$e->getMessage()} <br> Arquivo: {$e->getFile()} <br> linha: {$e->getLine()}");
     }
 
     return $pdo;
@@ -26,7 +34,7 @@ function cadastrarDb($tabela, $dadosCadastrar)
 {
     $pdo = conectarDb();
     $campos = count($dadosCadastrar);
-    
+
     try {
         $cadastrar = $pdo->prepare("insert into {$tabela} (pages, conteudo_titulo, conteudo_principal,conteudo_content) values (?, ?, ?,?)");
         for ($i = 0; $i < $campos; $i ++):
@@ -38,11 +46,29 @@ function cadastrarDb($tabela, $dadosCadastrar)
     }
 }
 
+function cadastrarDbAdmin($tabela, $dadosCadastrar)
+{
+    $pdo = conectarDb();
+    $campos = count($dadosCadastrar);
+
+    try {
+        $cadastrar = $pdo->prepare("insert into {$tabela} (login, email, senha) values (?, ?, ?)");
+        for ($i = 0; $i < $campos; $i ++):
+            $cadastrar->bindValue($i+1, $dadosCadastrar[$i]);
+        endfor;
+        $cadastrar->execute();
+    } catch (PDOException $e) {
+        die("Error: Código: {$e->getCode()} | Mensagem: {$e->getMessage()} |  Arquivo: {$e->getFile()} | linha: {$e->getLine()}");
+    }
+}
+
+
+
 // Função listar DB
 function listarDb($tabela)
 {
     $pdo = conectarDb();
-    
+
     try {
         $listar = $pdo->prepare("select * from $tabela");
         $listar->execute();
@@ -55,28 +81,11 @@ function listarDb($tabela)
 
 }
 
-// Função listar pelo id DB
-function listarId($tabela, $id)
-{
-    $pdo = conectarDb();
-    
-    try {
-        $listarPeloId = $pdo->prepare("select * from {$tabela} where id = :id");
-        $listarPeloId->bindValue(":id", $id);
-        $listarPeloId->execute();
-        $dados = $listarPeloId->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        echo $exc->getTraceAsString();
-        die("Error: Código: {$e->getCode()} | Mensagem: {$e->getMessage()} |  Arquivo: {$e->getFile()} | linha: {$e->getLine()}");
-    }
-    return $dados ;
-}
-
 // Função atualizar DB
 function atualizarDb($tabela, $dadosAtualizar, $id)
 {
     $pdo = conectarDb();
-    
+
     try {
         $atualizar = $pdo->prepare("update {$tabela} set conteudo = ? where id = ?");
         $atualizar->bindValue(1, $dadosAtualizar['conteudo']);
@@ -91,7 +100,7 @@ function atualizarDb($tabela, $dadosAtualizar, $id)
 function deletarDb($tabela, $id)
 {
     $pdo = conectarDb();
-    
+
     try {
         $deletar = $pdo->prepare("delete from {$tabela} where id = :id");
         $deletar->bindValue(":id", $id);
@@ -105,7 +114,7 @@ function deletarDb($tabela, $id)
 function listarPages($tabela, $pages)
 {
     $pdo = conectarDb();
-    
+
     try {
         $listarPeloId = $pdo->prepare("select * from {$tabela} where pages = :pages");
         $listarPeloId->bindValue(":pages", $pages);

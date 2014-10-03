@@ -3,7 +3,11 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 date_default_timezone_set('America/Sao_Paulo');
-require_once './functions/functionsDb.php';
+require_once 'functions/functionsDb.php';
+
+/*****************************
+função criar banco de dados MySQL
+*****************************/
 
 function criarDb() {
     $dsn     = 'mysql:host=localhost';
@@ -18,7 +22,7 @@ function criarDb() {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $pdo->query("CREATE DATABASE IF NOT EXISTS $dbname");
         $pdo->query("use $dbname");
-        print("Criado o banco de dados {$dbname}<br>");
+        print("O banco de dados {$dbname} foi criado com sucesso!<br>");
         $tabl ="CREATE table $table(
         id INT( 10 ) AUTO_INCREMENT NOT NULL PRIMARY KEY,
         pages VARCHAR( 250 ) NOT NULL, 
@@ -26,7 +30,7 @@ function criarDb() {
         conteudo_principal VARCHAR( 250 ) NOT NULL,
         conteudo_content VARCHAR( 250 ) NOT NULL);";
         $pdo->exec($tabl);
-        print("Criada a tabela {$table}<br>");
+        print("A tabela {$table} foi criada com sucesso!<br>");
         
     } catch (PDOException $e) {
         die("Error: Código: {$e->getCode()} | Mensagem: {$e->getMessage()} |  Arquivo: {$e->getFile()} | linha: {$e->getLine()}");
@@ -43,7 +47,43 @@ $cadastarDados = array('produtos','Página Produtos', 'Todo conteúdo principal 
 cadastrarDb('pages',$cadastarDados);
 $cadastarDados = array('servicos','Página Serviços', 'Todo conteúdo principal dos nossos serviços', 'Descrição do conteúdo da página serviços');
 cadastrarDb('pages',$cadastarDados);
-$cadastarDados = array('404','Página 404', 'ERRO', 'A pagina não exixte!');
+$cadastarDados = array('404','Página 404', 'Titulo do erro!', 'A pagina não exixte!');
 cadastrarDb('pages',$cadastarDados);
 
 
+function criarDbAdmin() {
+    $dsn     = 'mysql:host=localhost';
+    $user    = 'root';
+    $pass    = '';
+    $options = [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'];
+    $dbname  = 'curso_code_education';
+    $table   = 'admin';
+
+    try {
+        $pdo = new PDO($dsn, $user, $pass, $options);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->query("CREATE DATABASE IF NOT EXISTS $dbname");
+        $pdo->query("use $dbname");
+        $tabl ="CREATE table $table(
+        id INT( 10 ) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+        login VARCHAR( 250 ) NOT NULL, 
+        email VARCHAR( 250 ) NOT NULL,
+        senha VARCHAR( 250 ) NOT NULL);";
+        $pdo->exec($tabl);
+        print("A tabela {$table} foi criada com sucesso!<br>");
+        
+    } catch (PDOException $e) {
+        die("Error: Código: {$e->getCode()} | Mensagem: {$e->getMessage()} |  Arquivo: {$e->getFile()} | linha: {$e->getLine()}");
+    }
+    return $pdo;
+}
+//função para pegar a senha digitada e cadastrar no banco de dados cryptografada
+function passCrypt($senha)
+{
+    $senhaCrypt = password_hash($senha, PASSWORD_DEFAULT);
+    return $senhaCrypt;
+}
+
+criarDbAdmin();
+$cadastarDados = array('admin','admin@testando.com', passCrypt('1234'));
+cadastrarDbAdmin('admin',$cadastarDados);

@@ -1,12 +1,21 @@
-Meu 3º Projeto - Giancarlo
+4º Projeto - Fundamentos em PHP
 ======================================
 
-Aviso:
+A instalação
 -----------
 
-Confesso que tive dificuldades nao nas aulas , mais sim no desenvolvimento do que foi pedido.
-> Porem pesquisando muito e obsevando os trabalhos do colega, conseguir montar o que foi combinado.
-> Aprendir muito nessa aula e adquirir muito conhecimento .
-> tive um erro na parte da busca que me trouxe esse erro abaixo.
-> Notice: Undefined index: inputBusca in C:\Users\Giancarlo\EstudoCodeEdu\phpFundamentos\projeto3\functions\functionBusca.php on line 7
+Antes de testar esta aplicação.
+>1. *Tenha instalado na sua máquina o MySQL.*
 
+>2. *Abrir primeiramente o arquivo "fixture.php", ele irá criar a tabela "pages" com os conteúdos no banco de dados, também irá criar uma tabela chamada "admin" e cadastrará um usuário administrador*
+
+>3. *Para acessar o painel administrativo, logar como "admin" e senha "1234".*
+
+>4. *O arquivo fixture.php, está configurado para servidor local "localhost" com usuário "root" e password ""(vazio no meu caso).*
+
+
+**Obs:**
+
+*Confesso que para terminar esse projeto precisei pesquisar muito certos codigos dos amigos e assim tirar algumas duvidas que me restavam.*
+
+*Gostei muito desse modulo, porem sei que e somente  uma trilha do php.*
